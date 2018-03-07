@@ -3,14 +3,55 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   state: {
-
+    user: null,
+    gapiLoaded: false,
+    isSignedIn: false,
   },
   mutations: {
+    gapiLoaded (state) {
+      console.log('google api loaded!')
+      state.gapiLoaded = true
+    },
+
+    updateSignInStatus (state, isSignedIn) {
+      store.isSignedIn = isSignedIn
+    },
 
   },
   actions: {
-
-  }
+    signIn ({commit}) {
+      if (state.gapiLoaded) {
+        gapi.auth2.getAuthInstance().signIn()
+      }
+    },
+    signOut ({commit}) {
+      if (state.gapiLoaded) {
+        gapi.auth2.getAuthInstance().signOut()
+      }
+    },
+  },
 })
+
+window.gAuthInit = () => {
+  gapi.load('client:auth2', function () {
+    store.commit('gapiLoaded')
+    gapi.client.init({
+      apiKey: 'AIzaSyAjK1mi8amRdHYTQbeZIdGUlCH7mahevxg',
+      clientId: '960214299334-4nc7ad24u3cenam0j1bo4d3t5cbh5akg.apps.googleusercontent.com',
+      scope: 'profile',
+    }).then(function () {
+      // Listen for sign-in state changes.
+      gapi.auth2.getAuthInstance().
+        isSignedIn.
+        listen(status => store.commit('updateSignInStatus', status))
+
+      // Handle the initial sign-in state.
+      store.commit('updateSigninStatus',
+        gapi.auth2.getAuthInstance().isSignedIn.get())
+    })
+  })
+}
+
+export default store
