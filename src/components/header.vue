@@ -1,19 +1,33 @@
 <template>
-  <header><div><slot></slot></div><x-login></x-login></header>
+  <header>
+    <nav>
+      <slot></slot>
+    </nav>
+    <drivedb-login></drivedb-login>
+  </header>
 </template>
 
 <script>
-  import XLogin from './login'
+
+  import DrivedbLogin from 'components/login'
 
   export default {
-    components: {XLogin},
-    name: 'x-header',
+    components: {
+      DrivedbLogin,
+    },
+    name: 'drivedb-header',
   }
 </script>
 
 <style scoped>
   header {
-    display:flex;
+    display: flex;
     justify-items: flex-end;
   }
+
+  nav {
+    flex: 1;
+  }
+
+
 </style>

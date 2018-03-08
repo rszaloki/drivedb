@@ -1,7 +1,7 @@
 <template>
   <div v-if="gapiLoaded">
     <button v-if="!isSignedIn" @click="signIn()">Sign In</button>
-    <button v-if="isSignedIn" @click="signOut">Sign Out</button>
+    <button v-if="isSignedIn" @click="signOut()">Sign Out</button>
   </div>
 </template>
 
@@ -9,7 +9,7 @@
   import { mapState, mapActions } from 'vuex'
 
   export default {
-    name: 'x-login',
+    name: 'drivedb-login',
     computed: {
       ...mapState(['gapiLoaded', 'isSignedIn'])
     },

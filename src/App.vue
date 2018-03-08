@@ -1,24 +1,26 @@
 <template>
   <div id="app">
-    <x-header>
-      <router-link to="/">Home</router-link> |
+    <drivedb-header>
+      <router-link to="/">Home</router-link>
+      |
       <router-link to="/about">About</router-link>
-    </x-header>
+    </drivedb-header>
     <router-view/>
   </div>
 </template>
 <script>
-  import XHeader from './components/header'
+
+  import DrivedbHeader from 'components/header'
 
   export default {
-    components: {XHeader},
+    components: {DrivedbHeader},
     name: 'App',
   }
 </script>
 <style>
-#app {
-  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+  #app {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 </style>

@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import loadScript from 'load-script'
 
 Vue.use(Vuex)
 
@@ -34,9 +35,8 @@ const store = new Vuex.Store({
   },
 })
 
-window.gAuthInit = () => {
+loadScript('https://apis.google.com/js/api.js', () => {
   gapi.load('client:auth2', function () {
-    store.commit('gapiLoaded')
     gapi.client.init({
       apiKey: 'AIzaSyAjK1mi8amRdHYTQbeZIdGUlCH7mahevxg',
       clientId: '960214299334-4nc7ad24u3cenam0j1bo4d3t5cbh5akg.apps.googleusercontent.com',
@@ -50,8 +50,9 @@ window.gAuthInit = () => {
       // Handle the initial sign-in state.
       store.commit('updateSigninStatus',
         gapi.auth2.getAuthInstance().isSignedIn.get())
+      store.commit('gapiLoaded')
     })
   })
-}
+})
 
 export default store
