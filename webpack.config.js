@@ -1,5 +1,5 @@
-var path = require('path')
-var webpack = require('webpack')
+const path = require('path')
+const webpack = require('webpack')
 
 module.exports = {
   mode: 'development',
@@ -7,7 +7,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
-    filename: 'build.js',
+    filename: 'build.js'
   },
   module: {
     rules: [
@@ -15,40 +15,40 @@ module.exports = {
         test: /\.css$/,
         use: [
           'vue-style-loader',
-          'css-loader',
-        ],
+          'css-loader'
+        ]
       }, {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
-          loaders: {},
-        },
+          loaders: {}
+        }
       },
       {
         test: /\.(png|jpg|gif|svg)$/,
         loader: 'file-loader',
         options: {
-          name: '[name].[ext]?[hash]',
-        },
-      },
-    ],
+          name: '[name].[ext]?[hash]'
+        }
+      }
+    ]
   },
   resolve: {
     alias: {
       'src': path.resolve(__dirname, 'src/'),
-      'vue$': 'vue/dist/vue.runtime.esm.js',
+      'vue$': 'vue/dist/vue.runtime.esm.js'
     },
-    extensions: ['*', '.js', '.vue', '.json'],
+    extensions: ['*', '.js', '.vue', '.json']
   },
   devServer: {
     historyApiFallback: true,
     noInfo: true,
-    overlay: true,
+    overlay: true
   },
   performance: {
-    hints: false,
+    hints: false
   },
-  devtool: '#eval-source-map',
+  devtool: '#eval-source-map'
 }
 
 if (process.env.NODE_ENV === 'production') {
@@ -56,16 +56,16 @@ if (process.env.NODE_ENV === 'production') {
   module.exports.devtool = '#source-map'
   // http://vue-loader.vuejs.org/en/workflow/production.html
   module.exports.optimization = {
-    minimize: true,
+    minimize: true
   }
   module.exports.plugins = (module.exports.plugins || []).concat([
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: '"production"',
-      },
+        NODE_ENV: '"production"'
+      }
     }),
     new webpack.LoaderOptionsPlugin({
-      minimize: true,
-    }),
+      minimize: true
+    })
   ])
 }
