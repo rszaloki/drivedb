@@ -8,7 +8,7 @@ const store = new Vuex.Store({
   state: {
     user: null,
     gapiLoaded: false,
-    isSignedIn: false,
+    isSignedIn: false
   },
   mutations: {
     gapiLoaded (state) {
@@ -18,38 +18,36 @@ const store = new Vuex.Store({
 
     updateSignInStatus (state, isSignedIn) {
       store.isSignedIn = isSignedIn
-    },
+    }
 
   },
   actions: {
-    signIn ({commit}) {
+    signIn ({state}) {
       if (state.gapiLoaded) {
-        gapi.auth2.getAuthInstance().signIn()
+        window.gapi.auth2.getAuthInstance().signIn()
       }
     },
-    signOut ({commit}) {
+    signOut ({state}) {
       if (state.gapiLoaded) {
-        gapi.auth2.getAuthInstance().signOut()
+        window.gapi.auth2.getAuthInstance().signOut()
       }
-    },
-  },
+    }
+  }
 })
 
 loadScript('https://apis.google.com/js/api.js', () => {
-  gapi.load('client:auth2', function () {
-    gapi.client.init({
+  window.gapi.load('client:auth2', function () {
+    window.gapi.client.init({
       apiKey: 'AIzaSyAjK1mi8amRdHYTQbeZIdGUlCH7mahevxg',
       clientId: '960214299334-4nc7ad24u3cenam0j1bo4d3t5cbh5akg.apps.googleusercontent.com',
-      scope: 'profile',
+      scope: 'profile'
     }).then(function () {
       // Listen for sign-in state changes.
-      gapi.auth2.getAuthInstance().
-        isSignedIn.
-        listen(status => store.commit('updateSignInStatus', status))
+      window.gapi.auth2.getAuthInstance().isSignedIn.listen(status => store.commit('updateSignInStatus', status))
 
       // Handle the initial sign-in state.
-      store.commit('updateSigninStatus',
-        gapi.auth2.getAuthInstance().isSignedIn.get())
+      store.commit('updateSignInStatus',
+        window.gapi.auth2.getAuthInstance().isSignedIn.get())
       store.commit('gapiLoaded')
     })
   })

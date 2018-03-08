@@ -18,10 +18,10 @@
     },
     methods: {
       signIn () {
-        this.$store.actions.signIn()
+        this.$store.dispatch('signIn')
       },
       signOut () {
-        this.$store.actions.signOut()
+        this.$store.dispatch('signOut')
       }
     },
   }
