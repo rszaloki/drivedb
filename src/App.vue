@@ -9,8 +9,7 @@
   </div>
 </template>
 <script>
-
-  import DrivedbHeader from 'components/header'
+  import DrivedbHeader from 'src/components/header'
 
   export default {
     components: {DrivedbHeader},

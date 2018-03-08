@@ -9,7 +9,7 @@
 
 <script>
 
-  import DrivedbLogin from 'components/login'
+  import DrivedbLogin from 'src/components/login'
 
   export default {
     components: {

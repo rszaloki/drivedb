@@ -6,15 +6,23 @@
 </template>
 
 <script>
-  import { mapState, mapActions } from 'vuex'
-
   export default {
     name: 'drivedb-login',
     computed: {
-      ...mapState(['gapiLoaded', 'isSignedIn'])
+      gapiLoaded () {
+        return this.$store.state.gapiLoaded
+      },
+      isSignedIn () {
+        return this.$store.state.isSignedIn
+      },
     },
     methods: {
-      ...mapActions(['signIn', 'signOut']),
+      signIn () {
+        this.$store.actions.signIn()
+      },
+      signOut () {
+        this.$store.actions.signOut()
+      }
     },
   }
 </script>
