@@ -8,7 +8,8 @@ const store = new Vuex.Store({
   state: {
     user: null,
     gapiLoaded: false,
-    isSignedIn: false
+    isSignedIn: false,
+    fileId: null
   },
   mutations: {
     gapiLoaded (state) {
@@ -17,6 +18,7 @@ const store = new Vuex.Store({
     },
 
     updateSignInStatus (state, isSignedIn) {
+      console.log('signinchange', isSignedIn)
       state.isSignedIn = isSignedIn
     }
 
@@ -24,12 +26,16 @@ const store = new Vuex.Store({
   actions: {
     signIn ({state}) {
       if (state.gapiLoaded) {
-        window.gapi.auth2.getAuthInstance().signIn()
+        return window.gapi.auth2.getAuthInstance().signIn()
+      } else {
+        return Promise.reject(new Error('missing gapi!'))
       }
     },
     signOut ({state}) {
       if (state.gapiLoaded) {
-        window.gapi.auth2.getAuthInstance().signOut()
+        return window.gapi.auth2.getAuthInstance().signOut()
+      } else {
+        return Promise.reject(new Error('missing gapi!'))
       }
     }
   }

@@ -3,17 +3,17 @@
     <nav>
       <slot></slot>
     </nav>
-    <drivedb-login></drivedb-login>
+    <drivedb-logout></drivedb-logout>
   </header>
 </template>
 
 <script>
 
-  import DrivedbLogin from 'src/components/login'
+  import DrivedbLogout from 'src/components/logout'
 
   export default {
     components: {
-      DrivedbLogin,
+      DrivedbLogout,
     },
     name: 'drivedb-header',
   }
@@ -23,11 +23,10 @@
   header {
     display: flex;
     justify-items: flex-end;
+    align-items: center;
   }
 
   nav {
     flex: 1;
   }
-
-
 </style>

@@ -1,8 +1,5 @@
 <template>
-  <div v-if="gapiLoaded">
-    <button v-if="!isSignedIn" @click="signIn()">Sign In</button>
-    <button v-if="isSignedIn" @click="signOut()">Sign Out</button>
-  </div>
+  <button v-if="gapiLoaded && !isSignedIn" @click="signIn()" class="">Sign In</button>
 </template>
 
 <script>
@@ -14,19 +11,12 @@
       },
       isSignedIn () {
         return this.$store.state.isSignedIn
-      },
+      }
     },
     methods: {
       signIn () {
         this.$store.dispatch('signIn')
-      },
-      signOut () {
-        this.$store.dispatch('signOut')
       }
-    },
+    }
   }
 </script>
-
-<style scoped>
-
-</style>
