@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import Automerge from 'automerge'
 
 Vue.use(Vuex)
 
@@ -8,7 +9,8 @@ const store = new Vuex.Store({
     user: null,
     gapiLoaded: false,
     isSignedIn: false,
-    fileId: null
+    file: null,
+    doc: null
   },
   mutations: {
     gapiLoaded (state) {
@@ -19,8 +21,21 @@ const store = new Vuex.Store({
     updateSignInStatus (state, isSignedIn) {
       console.log('signinchange', isSignedIn)
       state.isSignedIn = isSignedIn
+    },
+
+    updateDoc (state, newDoc) {
+      state.doc = newDoc
+    },
+
+    updateFile (state, file) {
+      state.file = Object.freeze(file)
     }
 
+  },
+  getters: {
+    saveDoc (state) {
+      return Automerge.save(state.doc)
+    }
   },
   actions: {
     signIn ({state}) {
@@ -36,6 +51,26 @@ const store = new Vuex.Store({
       } else {
         return Promise.reject(new Error('missing gapi!'))
       }
+    },
+    initFile ({commit}) {
+      commit('updateFile', {name: 'Untitled'})
+    },
+    renameFile ({commit, state}, newName) {
+      if (newName.length) {
+        if (!state.file || !state.file.saved) {
+
+        }
+        commit('updateFile', Object.assign({}, state.file, {name: newName}))
+      }
+    },
+    initDoc ({commit}) {
+      commit('updateDoc', Automerge.init())
+    },
+    changeDoc ({state, commit}, callback, message) {
+      commit('updateDoc', Automerge.change(state.doc, message, callback))
+    },
+    loadDoc ({state, commit}, serializedDoc) {
+      commit('updateDoc', Automerge.load(serializedDoc))
     }
   }
 })

@@ -43,15 +43,18 @@
     right: 0;
     display: grid;
     grid-template-rows: [start] 80px [header-end] auto [end];
+    grid-template-columns: [start] auto [end];
     background: whitesmoke;
   }
 
   header {
     grid-row: start / header-end;
+    grid-column: start / end;
   }
 
   main {
     grid-row: header-end / end;
+    grid-column: start / end;
   }
 
   main.fullscreen {
@@ -64,5 +67,10 @@
 
   button, .button {
     margin-bottom: 0;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    margin: auto;
+    letter-spacing: 0;
   }
 </style>

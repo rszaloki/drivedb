@@ -1,5 +1,6 @@
 <template>
   <header>
+    <drivedb-file-name></drivedb-file-name>
     <nav>
       <slot></slot>
     </nav>
@@ -10,12 +11,14 @@
 <script>
 
   import DrivedbLogout from 'src/components/logout'
+  import DrivedbFileName from 'src/components/fileName'
 
   export default {
     components: {
-      DrivedbLogout,
+      DrivedbFileName,
+      DrivedbLogout
     },
-    name: 'drivedb-header',
+    name: 'drivedb-header'
   }
 </script>
 

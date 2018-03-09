@@ -1,7 +1,7 @@
 <template>
   <main class="empty">
     <div>
-      <button class="pure-button pure-button-primary">create a new</button>
+      <button class="pure-button pure-button-primary" @click="createNew()">create a new</button>
       or
       <button class="pure-button pure-button-secondary">Pick an existing</button>
     </div>
@@ -10,7 +10,14 @@
 
 <script>
   export default {
-    name: 'empty'
+    name: 'empty',
+    methods: {
+      createNew() {
+        this.$store.dispatch('initDoc')
+        this.$store.dispatch('initFile')
+        this.$router.replace('/')
+      }
+    }
   }
 </script>
 
