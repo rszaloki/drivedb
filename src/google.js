@@ -13,6 +13,7 @@ const gclient = (new Promise(resolve => load('https://apis.google.com/js/platfor
   const status = window.gapi.auth2.getAuthInstance().isSignedIn.get()
   store.commit('updateSignInStatus', status)
   store.commit('gapiLoaded')
+  return window.gapi
 }).catch(e => console.error(e)))
 
 export default gclient

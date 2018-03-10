@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import Automerge from 'automerge'
 import uuidV4 from 'uuid/v4'
+import { saveFile } from 'src/drive'
 
 Vue.use(Vuex)
 
@@ -54,16 +55,22 @@ const store = new Vuex.Store({
       }
     },
     initFile ({commit}) {
-      commit('updateFile', {name: 'Untitled'})
+      commit('updateFile', {
+        name: 'Untitled.drivedb',
+        editable: true,
+        mimeType: 'application/json'
+      })
     },
-    renameFile ({commit, state}, newName) {
-      if (newName.length) {
-        if (!state.file || !state.file.saved) {
-          // TODO: create a file
+    renameFile ({commit, state, dispatch}, newName) {
+      if (newName.length && state.file) {
+        commit('updateFile', Object.assign({}, state.file, {name: newName}))
+        if (!state.file.id) {
+          dispatch('saveDoc').then(doc => saveFile(state.file, doc)).then(result => {
+            commit('updateFile', Object.assign({}, state.file, result))
+          })
         } else {
           // TODO: rename the file
         }
-        commit('updateFile', Object.assign({}, state.file, {name: newName}))
       }
     },
     initDoc ({commit, dispatch}) {
@@ -72,6 +79,7 @@ const store = new Vuex.Store({
       dispatch('changeDoc', doc => {
         doc.people = {}
       }, message)
+      console.log(message)
     },
     changeDoc ({state, commit}, callback, message) {
       commit('updateDoc', Automerge.change(state.doc, message, callback))
@@ -79,7 +87,7 @@ const store = new Vuex.Store({
     loadDoc ({state, commit}, serializedDoc) {
       commit('updateDoc', Automerge.load(serializedDoc))
     },
-    saveDoc (state) {
+    saveDoc ({state}) {
       return Automerge.save(state.doc)
     },
     createNewItem ({dispatch}) {
