@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Automerge from 'automerge'
+import uuidV4 from 'uuid/v4'
 
 Vue.use(Vuex)
 
@@ -33,8 +34,8 @@ const store = new Vuex.Store({
 
   },
   getters: {
-    saveDoc (state) {
-      return Automerge.save(state.doc)
+    people (state) {
+      return state.doc && state.doc.people
     }
   },
   actions: {
@@ -58,19 +59,50 @@ const store = new Vuex.Store({
     renameFile ({commit, state}, newName) {
       if (newName.length) {
         if (!state.file || !state.file.saved) {
-
+          // TODO: create a file
+        } else {
+          // TODO: rename the file
         }
         commit('updateFile', Object.assign({}, state.file, {name: newName}))
       }
     },
-    initDoc ({commit}) {
+    initDoc ({commit, dispatch}) {
+      const message = 'initialize doc'
       commit('updateDoc', Automerge.init())
+      dispatch('changeDoc', doc => {
+        doc.people = {}
+      }, message)
     },
     changeDoc ({state, commit}, callback, message) {
       commit('updateDoc', Automerge.change(state.doc, message, callback))
     },
     loadDoc ({state, commit}, serializedDoc) {
       commit('updateDoc', Automerge.load(serializedDoc))
+    },
+    saveDoc (state) {
+      return Automerge.save(state.doc)
+    },
+    createNewItem ({dispatch}) {
+      const itemId = uuidV4()
+      const message = `created new item ${itemId}`
+      const item = {
+        name: 'John Doe',
+        title: 'untitled',
+        created: Date.now(),
+        id: itemId
+      }
+      dispatch('changeDoc', doc => {
+        doc.people[itemId] = item
+      }, message)
+      console.log(message)
+      return itemId
+    },
+    updateItem ({dispatch}, item) {
+      const message = `update item ${item.id}`
+      dispatch('changeDoc', doc => {
+        doc.people[item.id] = item
+      }, message)
+      console.log(message)
     }
   }
 })

@@ -12,6 +12,7 @@
   "dependencies": {
     "automerge": "^0.7.1",
     "load-script": "^1.0.0",
+    "uuid": "^3.2.1",
     "vue": "^2.5.11",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"

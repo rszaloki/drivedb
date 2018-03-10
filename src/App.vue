@@ -55,6 +55,7 @@
   main {
     grid-row: header-end / end;
     grid-column: start / end;
+    overflow: auto;
   }
 
   main.fullscreen {
@@ -70,7 +71,7 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    margin: auto;
+    margin: 0;
     letter-spacing: 0;
   }
 </style>

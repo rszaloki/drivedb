@@ -1,25 +1,23 @@
 <template>
-  <h3 ref="title" @blur="endRename()" @click="startRename()">{{fileName}}</h3>
+  <h3>
+    <drivedb-inplace-editor v-model="fileName"></drivedb-inplace-editor>
+  </h3>
 </template>
 
 <script>
+  import DrivedbInplaceEditor from 'src/components/inplaceEditor'
+
   export default {
+    components: {DrivedbInplaceEditor},
     name: 'drivedb-file-name',
     computed: {
-      fileName () {
-        return this.$store.state.file && this.$store.state.file.name
-      }
-    },
-    methods: {
-      startRename() {
-        const title = this.$refs.title;
-        title.contentEditable = true;
-        title.focus();
-      },
-      endRename() {
-        const title = this.$refs.title;
-        title.contentEditable = false;
-        this.$store.dispatch('renameFile', title.innerText)
+      fileName: {
+        get: function () {
+          return this.$store.state.file && this.$store.state.file.name
+        },
+        set: function (newVal) {
+          this.$store.dispatch('renameFile', newVal)
+        }
       }
     }
   }
